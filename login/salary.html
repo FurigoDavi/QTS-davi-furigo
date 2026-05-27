@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
   <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
   <title>CRUD</title> 
-  <link rel="stylesheet" href="login.css"> 
+  <link rel="stylesheet" href="styles.css"> 
   <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' 
 rel='stylesheet'> 
 </head> 
@@ -14,19 +14,24 @@ rel='stylesheet'>
 <body> 
   <div class="container"> 
     <div class="header"> 
-      <span>Login</span> 
-
-      <div class="buttons">
-        <button onclick="openModal()" id="new">Fazer login</i></button> 
-        <button onclick="openModal()" id="new2">Cadastrar</i></button> 
-      </div>
-
+      <span>Cadastro de Funcionários</span> 
+      <button onclick="openModal()" id="new">Incluir</i></button> 
     </div> 
  
     <div class="divTable"> 
-      <div class="register">
-        <button onclick="openModal()" id="new2">Cadastrar</i></button> 
-      </div>
+      <table> 
+        <thead> 
+          <tr> 
+            <th>Nome</th> 
+            <th>Função</th> 
+            <th>Salário</th> 
+            <th class="acao">Editar</th> 
+            <th class="acao">Excluir</th> 
+          </tr> 
+        </thead>
+        <tbody> 
+        </tbody> 
+      </table> 
     </div> 
  
     <div class="modal-container"> 
