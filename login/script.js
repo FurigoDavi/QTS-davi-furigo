@@ -1,3 +1,7 @@
+if (!localStorage.getItem('usuarioLogado')) {
+    window.location.href = 'index.html';
+}
+
 const modal = document.querySelector('.modal-container');
 const tbody = document.querySelector('tbody');
 const sNome = document.querySelector('#m-nome');
@@ -94,3 +98,12 @@ const getItensBD = () => JSON.parse(localStorage.getItem('dbfunc')) ?? [];
 const setItensBD = () => localStorage.setItem('dbfunc', JSON.stringify(itens));
 
 loadItens();
+
+document
+  .getElementById('logout')
+  .addEventListener('click', () => {
+
+    localStorage.removeItem('usuarioLogado');
+
+    window.location.href = 'index.html';
+});
