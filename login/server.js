@@ -68,6 +68,59 @@ app.delete('/api/funcionarios/:id', async (req, res) => {
     }
 });
 
+app.post('/api/cadastro', async (req, res) => {
+    try {
+        const { email, senha } = req.body;
+
+        const [usuario] = await db.execute(
+            'SELECT * FROM usuarios WHERE email = ?',
+            [email]
+        );
+
+        if (usuario.length > 0) {
+            return res.status(400).json({
+                error: 'Email já cadastrado'
+            });
+        }
+
+        await db.execute(
+            'INSERT INTO usuarios (email, senha) VALUES (?, ?)',
+            [email, senha]
+        );
+
+        res.json({ success: true });
+
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.post('/api/login', async (req, res) => {
+    try {
+
+        const { email, senha } = req.body;
+
+        const [usuario] = await db.execute(
+            'SELECT * FROM usuarios WHERE email = ? AND senha = ?',
+            [email, senha]
+        );
+
+        if (usuario.length === 0) {
+            return res.status(401).json({
+                error: 'Email ou senha inválidos'
+            });
+        }
+
+        res.json({
+            success: true,
+            usuario: usuario[0]
+        });
+
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
 const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`🚀 Servidor rodando em http://localhost:${PORT}`);

@@ -12,9 +12,6 @@ function openCadastro() {
     modal.classList.add('active');
     modalTitle.innerText = 'Cadastro';
     btnSalvar.innerText = 'Cadastrar';
-
-    email.value = '';
-    senha.value = '';
 }
 
 function openLogin() {
@@ -23,72 +20,72 @@ function openLogin() {
     modal.classList.add('active');
     modalTitle.innerText = 'Login';
     btnSalvar.innerText = 'Entrar';
-
-    email.value = '';
-    senha.value = '';
 }
 
-modal.onclick = (e) => {
-    if (e.target.classList.contains('modal-container')) {
-        modal.classList.remove('active');
-    }
-};
+btnSalvar.onclick = async (e) => {
 
-btnSalvar.onclick = (e) => {
     e.preventDefault();
 
-    if (email.value === '' || senha.value === '') {
-        alert('Preencha todos os campos!');
-        return;
-    }
+    const dados = {
+        email: email.value,
+        senha: senha.value
+    };
 
-    let usuarios =
-        JSON.parse(localStorage.getItem('usuarios')) || [];
+    try {
 
-    if (modo === 'cadastro') {
+        if (modo === 'cadastro') {
 
-        const existe = usuarios.find(
-            u => u.email === email.value
-        );
+            const resposta = await fetch(
+                'http://localhost:3000/api/cadastro',
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(dados)
+                }
+            );
 
-        if (existe) {
-            alert('Este email já está cadastrado!');
-            return;
+            const resultado = await resposta.json();
+
+            if (!resposta.ok) {
+                alert(resultado.error);
+                return;
+            }
+
+            alert('Cadastro realizado!');
         }
 
-        usuarios.push({
-            email: email.value,
-            senha: senha.value
-        });
+        if (modo === 'login') {
 
-        localStorage.setItem(
-            'usuarios',
-            JSON.stringify(usuarios)
-        );
+            const resposta = await fetch(
+                'http://localhost:3000/api/login',
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(dados)
+                }
+            );
 
-        alert('Cadastro realizado com sucesso!');
-        modal.classList.remove('active');
-    }
+            const resultado = await resposta.json();
 
-    if (modo === 'login') {
-
-        const usuario = usuarios.find(
-            u =>
-                u.email === email.value &&
-                u.senha === senha.value
-        );
-
-        if (usuario) {
+            if (!resposta.ok) {
+                alert(resultado.error);
+                return;
+            }
 
             localStorage.setItem(
                 'usuarioLogado',
-                email.value
+                resultado.usuario.email
             );
 
             window.location.href = 'salary.html';
-
-        } else {
-            alert('Email ou senha incorretos!');
         }
+
+    } catch (erro) {
+        alert('Erro ao conectar ao servidor');
+        console.error(erro);
     }
 };
