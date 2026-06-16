@@ -12,6 +12,9 @@ function openCadastro() {
     modal.classList.add('active');
     modalTitle.innerText = 'Cadastro';
     btnSalvar.innerText = 'Cadastrar';
+
+    email.value = '';
+    senha.value = '';
 }
 
 function openLogin() {
@@ -20,11 +23,24 @@ function openLogin() {
     modal.classList.add('active');
     modalTitle.innerText = 'Login';
     btnSalvar.innerText = 'Entrar';
+
+    email.value = '';
+    senha.value = '';
 }
 
-btnSalvar.onclick = async (e) => {
+modal.addEventListener('click', (e) => {
+    if (e.target.classList.contains('modal-container')) {
+        modal.classList.remove('active');
+    }
+});
 
+btnSalvar.addEventListener('click', async (e) => {
     e.preventDefault();
+
+    if (!email.value || !senha.value) {
+        alert('Preencha todos os campos!');
+        return;
+    }
 
     const dados = {
         email: email.value,
@@ -53,7 +69,8 @@ btnSalvar.onclick = async (e) => {
                 return;
             }
 
-            alert('Cadastro realizado!');
+            alert('Cadastro realizado com sucesso!');
+            modal.classList.remove('active');
         }
 
         if (modo === 'login') {
@@ -85,7 +102,7 @@ btnSalvar.onclick = async (e) => {
         }
 
     } catch (erro) {
-        alert('Erro ao conectar ao servidor');
         console.error(erro);
+        alert('Erro ao conectar com o servidor.');
     }
-};
+});
