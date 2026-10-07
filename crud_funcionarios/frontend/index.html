@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Cadastro de Funcionários</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="header">
+
+            <h1>Cadastro de Funcionários</h1>
+
+            <button id="new">
+                Incluir
+            </button>
+
+        </div>
+
+        <div class="divTable">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Função</th>
+                        <th>Salário</th>
+                        <th>Editar</th>
+                        <th>Excluir</th>
+                    </tr>
+                </thead>
+
+                <tbody id="tabelaFuncionarios">
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <div class="modal-container" id="modal">
+
+        <div class="modal">
+
+            <h2>Funcionário</h2>
+
+            <form id="form">
+
+                <label>Nome</label>
+                <input
+                    type="text"
+                    id="m-nome"
+                    required
+                >
+
+                <label>Função</label>
+                <input
+                    type="text"
+                    id="m-funcao"
+                    required
+                >
+
+                <label>Salário</label>
+                <input
+                    type="number"
+                    id="m-salario"
+                    step="0.01"
+                    required
+                >
+
+                <button type="submit">
+                    Salvar
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
